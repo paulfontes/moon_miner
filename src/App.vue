@@ -1,29 +1,45 @@
 // JS
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { AppState } from './AppState.js'
 import { goldService } from './services/GoldService.js';
+import Shop from './components/Shop.vue';
 
+const gold = computed(() => AppState.gold)
+const multiplier = computed(() => AppState.multiplier)
+const autoMultiplier = computed(() => AppState.autoMultiplier)
 
 function getGold() {
+
   goldService.addGold()
 }
+
+function goldOnIntervol() {
+  goldService.addGoldOnIntervol()
+}
+
+onMounted(() => { setInterval(goldOnIntervol, 2000) })
 
 </script>
 
 
 // HTML
 <template>
-  <main class="container-fluid">
+  <main class="container-fluid text-white">
     <section class="row">
-      <div class="col-2">
-        <span>Gold: <i class="mdi mdi-gold"></i> {{ AppState.gold }}</span>
+      <div class="col-4 fw-bolder fs-5">
+        <span>Gold: <i class="mdi mdi-gold"></i> {{ gold }}</span>
       </div>
-      <div class="col-10">
-        <img
-          src="https://plus.unsplash.com/premium_photo-1739104471562-aa4d097784ee?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGdvYmxpbnxlbnwwfHwwfHx8MA%3D%3D"
-          @click="getGold()" alt="">
+      <div class="col-4 fw-bolder fs-5 ">
+        <span>Gold Per Click: <i class="mdi mdi-gold"></i> {{ multiplier }}</span>
       </div>
+      <div class="col-4 fw-bolder fs-5 text-end">
+        <span>Gold Per 2 Seconds: <i class="mdi mdi-gold"></i> {{ autoMultiplier }}</span>
+      </div>
+      <div class="col-12 d-flex justify-content-center boss-img">
+        <img src="https://pngimg.com/uploads/goblin/goblin_PNG11.png" @click="getGold()" alt="">
+      </div>
+      <Shop />
     </section>
   </main>
 </template>

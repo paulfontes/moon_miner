@@ -3,9 +3,13 @@ import { computed } from "vue"
 
 class GoldService {
     addGold() {
-        const gold = computed((g) => AppState.gold)
-        AppState.gold++
 
+        AppState.gold += AppState.multiplier
+
+    }
+
+    addGoldOnIntervol() {
+        AppState.gold += AppState.autoMultiplier
     }
 
 }

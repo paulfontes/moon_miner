@@ -4,5 +4,6 @@ export class Upgrade {
         this.name = data.name
         this.quantity = data.quantity
         this.multiplier = data.multiplier
+        this.price = data.price
     }
 }
